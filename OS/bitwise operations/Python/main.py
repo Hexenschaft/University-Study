@@ -1,23 +1,4 @@
 # -----------------------------------------------------------
-# handling arithmetic operations at bitwise level
-# -----------------------------------------------------------
-#
-# implementation isn't perfect and therefore is not
-# recommended for use in projects, but can provide
-# some clues about how do bitwise operations
-# work and be useful for study purposes
-#
-# current implementation can (and do) contain some
-# misleading parts about arithmetic logic at bitwise
-# level, so learn with care
-#
-# at the moment of publishing this code I found
-# much simpler and more efficient ways of
-# implementing this to provide more clear and
-# understandable code, but I decided to post
-# this anyway
-#
-# -----------------------------------------------------------
 # Released under MIT Public License (MIT)
 # (C) Alexander Isaychikov, Minsk, Belarus
 # email isaychikov.ai@yahoo.com
