@@ -1,7 +1,6 @@
 # Handling arithmetic operations at bitwise level
 
-![](image/Image.png =900x600)
- <img src="image/Image.png" alt="Absolutely not funny image to draw attention" width="800" height="450">
+ <img src="image/Image.png" alt="Absolutely not funny image to draw attention" width="640" height="360">
  
 Current implementation isn't perfect and therefore is not recommended for use in any serious projects, but can provide some clues about how do bitwise operations work and be useful for study purposes.
 
