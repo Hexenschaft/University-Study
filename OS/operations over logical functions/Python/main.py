@@ -20,6 +20,8 @@ if __name__ == '__main__':
     print('-' * 100)
     print_truth_table(out)
     print('-' * 100)
+    print('Index form: ', get_index_form(out))
+    print('-' * 100)
     print('PDNF', build_PDNF(out))
     print('-' * 100)
     print('PCNF', build_PCNF(out))
