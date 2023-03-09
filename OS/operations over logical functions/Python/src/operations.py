@@ -53,6 +53,32 @@ def get_truth_table(function):
 
     return output
 
+        
+def get_index_form(function):
+    """
+    Computes index form for given function, which basically
+    means converting truth table's function outputs into binary
+    format and then into decimal
+
+    Parameters
+    ----------
+    function : Variable
+        Logical function represented as computation graph
+
+    Returns
+    -------
+    int
+        Index form of logical function
+
+    """
+    table = get_truth_table(function)
+    
+    binary = [x[-1] for x in table]
+    
+    decimal = sum([x*pow(2, i) for i, x in enumerate(reversed(binary))])
+    
+    return decimal
+
 
 def print_truth_table(function):
     """
