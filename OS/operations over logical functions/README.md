@@ -2,6 +2,7 @@
 
 Current implementation deals with logical expressions as computation graphs and performs some operations, such as:
 * Computation of truth table
+* Computation of index form for logical function
 * Computation of PCNF 
 * Computation of PDNF
 * Minimization of PCNF
