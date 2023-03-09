@@ -6,4 +6,4 @@ Current implementation deals with logical expressions as computation graphs and 
 
 I admit that this implementation isn't perfect and may contain some issues, otherwise it can be helpful as example or even backbone for designing similar systems
 
-You can find implementations in both [Python](Python) and [IPython](Ipython).
+You can find implementations in both [Python](Python) and [IPython](IPython).
