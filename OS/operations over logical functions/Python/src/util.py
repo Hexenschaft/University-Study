@@ -57,7 +57,8 @@ def _get_sorted_input(input_list):
     for i in range(n + 1):
         temp = input_list[sum_list == i]
         sorted_list.append(list(temp))
-
+    sorted_list.append([])
+    
     return sorted_list
 
 
@@ -214,6 +215,8 @@ def _get_reduced_implicant_list(input_list):
             value_combinations.append(set([y for x in combination for y in x]))
 
     output = [x for i, x in enumerate(key_combinations) if value_combinations[i] == minterm_set]
+    if len(output) == 0:
+        return []
     output = [x for x in output if len(x) == min([len(y) for y in output])]
     output = [list(x) for x in output[0]]
 
