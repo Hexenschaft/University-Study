@@ -112,21 +112,34 @@ def print_truth_table(function):
         print(out)
 
 
-def build_PDNF(function):
+def build_PDNF(value, custom_operands=None):
     """
-    Builds Principal Disjunction Normal Form of a given function
+    Builds Principal Disjunction Normal Form of a given function or truth table
 
     Parameters
     ----------
-    function : Variable
-
+    value : Variable/list
+        Input function of 2-dimensional truth table
+    custom_operands: list
+        Custom operand identifiers (instead of standard A, B, C etc.)
+        
     Returns
     -------
     str
         String representation of PDNF
     """
-    table = get_truth_table(function)
-    operands = function._operand_list
+    if isinstance(value, Variable):
+        table = get_truth_table(value)
+    else:
+        table = value
+    
+    if custom_operands is not None:
+        operands = custom_operands
+    elif isinstance(value, Variable):
+        operands = value._operand_list
+    else:
+        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
+        
     combinations = [c[:-1] for c in table if c[-1] == 1]
     if len(combinations) == 0:
         return 'PDNF does not exist'
@@ -147,21 +160,35 @@ def build_PDNF(function):
     return out
 
 
-def build_PCNF(function):
+def build_PCNF(value, custom_operands=None):
     """
-    Builds Conjunctive Disjunction Normal Form of a given function
+    Builds Conjunctive Disjunction Normal Form of a given function or truth table
 
     Parameters
     ----------
-    function : Variable
-
+    value : Variable/list
+        Input function of 2-dimensional truth table
+    custom_operands: list
+        Custom operand identifiers (instead of standard A, B, C etc.)
+        
     Returns
     -------
     str
         String representation of PCNF
     """
-    table = get_truth_table(function)
-    operands = function._operand_list
+    if isinstance(value, Variable):
+        table = get_truth_table(value)
+    else:
+        table = value
+    
+    if custom_operands is not None:
+        operands = custom_operands
+    elif isinstance(value, Variable):
+        operands = value._operand_list
+    else:
+        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
+        
+        
     combinations = [c[:-1] for c in table if c[-1] == 0]
     if len(combinations) == 0:
         return 'PCNF does not exist'
@@ -182,27 +209,40 @@ def build_PCNF(function):
     return out
 
 
-def minimize_PDNF(function):
+def minimize_PDNF(value, custom_operands=None):
     """
-    Builds minimization for PDNF of a given function
+    Builds minimization for PDNF of a given function or truth table
 
     Parameters
     ----------
-    function : Variable
-
+    value : Variable/list
+        Input function of 2-dimensional truth table
+    custom_operands: list
+        Custom operand identifiers (instead of standard A, B, C etc.)
+        
     Returns
     -------
     str
         String representation of PDNF minimization
     """
-    table = get_truth_table(function)
-    operands = function._operand_list
+    if isinstance(value, Variable):
+        table = get_truth_table(value)
+    else:
+        table = value
+    
+    if custom_operands is not None:
+        operands = custom_operands
+    elif isinstance(value, Variable):
+        operands = value._operand_list
+    else:
+        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
+        
     combinations = [c[:-1] for c in table if c[-1] == 1]
     if len(combinations) == 0:
         return 'PDNF minimization does not exist'
     combinations = _get_reduced_implicant_list(combinations)
     if len(combinations) == 0:
-        return '1'
+        return build_PDNF(value, custom_operands)
     out = ""
 
     for current_index, combination in enumerate(combinations):
@@ -224,27 +264,40 @@ def minimize_PDNF(function):
     return out
 
 
-def minimize_PCNF(function):
+def minimize_PCNF(value, custom_operands=None):
     """
-    Builds minimization for PCNF of a given function
+    Builds minimization for PCNF of a given function or truth table
 
     Parameters
     ----------
-    function : Variable
-
+    value : Variable/list
+        Input function of 2-dimensional truth table
+    custom_operands: list
+        Custom operand identifiers (instead of standard A, B, C etc.)
+        
     Returns
     -------
     str
         String representation of PCNF minimization
     """
-    table = get_truth_table(function)
-    operands = function._operand_list
+    if isinstance(value, Variable):
+        table = get_truth_table(value)
+    else:
+        table = value
+    
+    if custom_operands is not None:
+        operands = custom_operands
+    elif isinstance(value, Variable):
+        operands = value._operand_list
+    else:
+        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
+
     combinations = [c[:-1] for c in table if c[-1] == 0]
     if len(combinations) == 0:
         return 'PCNF minimization does not exist'
     combinations = _get_reduced_implicant_list(combinations)
     if len(combinations) == 0:
-        return '0'
+        return build_PCNF(value, custom_operands)
     out = ""
 
     for n, c in enumerate(combinations):
@@ -264,3 +317,4 @@ def minimize_PCNF(function):
         out += ' & ' if n < len(combinations) - 1 else ''
 
     return out
+
