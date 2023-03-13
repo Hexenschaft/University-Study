@@ -1,7 +1,8 @@
 # -----------------------------------------------------------
+# © 2023 Alexander Isaychikov
 # Released under MIT License
-# (C) Alexander Isaychikov, Minsk, Belarus
-# email isaychikov.ai@yahoo.com
+# Minsk, Belarus
+# email alipheesa@gmail.com
 # -----------------------------------------------------------
 
 from src.Variable import *
