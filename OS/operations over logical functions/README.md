@@ -8,6 +8,6 @@ Current implementation deals with logical expressions as computation graphs and 
 * Minimization of PCNF
 * Minimization of PDNF
 
-I admit that this implementation isn't perfect and may contain some issues, otherwise it can be helpful as example or even backbone for designing similar systems
+I admit that this implementation isn't perfect and may contain some issues, otherwise it can be helpful as example or even backbone for designing related systems
 
 You can find implementation in both [Python](Python) and [IPython](IPython).
