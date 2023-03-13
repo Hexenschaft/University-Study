@@ -6,18 +6,17 @@
 # -----------------------------------------------------------
 
 import numpy as np
+import math
 import itertools
 
 
 def _cartesian(arrays):
     """
     Computes all existing combinations of given arrays
-
     Parameters
     ----------
     arrays : list
         List of arrays to combine
-
     Returns
     -------
     list
@@ -43,7 +42,7 @@ def _expand_vector_to_table(vector):
     length = len(vector)
     if math.log(length, 2) != int(math.log(length, 2)):
         raise Exception('Log[2] of input vector\'s length must be integer, not float')
-        
+
     operand_count = int(math.log(length, 2))
     lists = _cartesian([[0, 1] for _ in range(operand_count)])
     output = [list(x) + y for x, y in zip(lists, vector)]
@@ -53,12 +52,10 @@ def _expand_vector_to_table(vector):
 def _get_sorted_input(input_list):
     """
     Split input list by amount of true values (1) in each combination
-
     Parameters
     ----------
     input_list : list
         Matrix (list of lists) of combinations
-
     Returns
     -------
     list
@@ -73,28 +70,24 @@ def _get_sorted_input(input_list):
         temp = input_list[sum_list == i]
         sorted_list.append(list(temp))
     sorted_list.append([])
-    
+
     return sorted_list
 
 
 def _implicant_forward(input_list, mint_to_i_dict=None):
     """
     Messy function that makes an iteration according to Quine–McCluskey algorithm
-
     Parameters
     ----------
     input_list : list
         list of combination Matrices, where combinations are splitted
         according to the amount of true values (1) in them
     mint_to_i_dict : dict
-
-
     Returns
     -------
     list, dict
         list of combinations
         dict of minterms
-
     Notes
     -----
     Forwards input list and maps calculated combinations into minterm indices,
@@ -148,12 +141,10 @@ def _remove_implicant_duplicates(input_list):
     """
     Recieves a list of implicants and removes duplicate implicants
     of smaller size
-
     Parameters
     ----------
     input_list : list
         list of implicants
-
     Returns
     -------
     list
@@ -200,7 +191,6 @@ def _get_implicant_list(input_list):
     """
     Iterates according to Quine–McCluskey algorithm multiple times,
     outputs implicant list and minterm dict
-
     Combines all declared above functions
     """
     minterm_dict = None

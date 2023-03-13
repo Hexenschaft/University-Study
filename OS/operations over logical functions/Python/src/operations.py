@@ -1,10 +1,12 @@
 # -----------------------------------------------------------
+# © 2023 Alexander Isaychikov
 # Released under MIT License
-# (C) Alexander Isaychikov, Minsk, Belarus
-# email isaychikov.ai@yahoo.com
+# Minsk, Belarus
+# email alipheesa@gmail.com
 # -----------------------------------------------------------
 
-from src.util import _cartesian, _get_reduced_implicant_list
+from src.util import _cartesian, _get_reduced_implicant_list, _expand_vector_to_table
+from src.Variable import Variable
 
 
 def get_truth_table(function):
@@ -53,32 +55,6 @@ def get_truth_table(function):
 
     return output
 
-        
-def get_index_form(function):
-    """
-    Computes index form for given function, which basically
-    means converting truth table's function outputs into binary
-    format and then into decimal
-
-    Parameters
-    ----------
-    function : Variable
-        Logical function represented as computation graph
-
-    Returns
-    -------
-    int
-        Index form of logical function
-
-    """
-    table = get_truth_table(function)
-    
-    binary = [x[-1] for x in table]
-    
-    decimal = sum([x*pow(2, i) for i, x in enumerate(reversed(binary))])
-    
-    return decimal
-
 
 def print_truth_table(function):
     """
@@ -86,7 +62,6 @@ def print_truth_table(function):
     """
     table = get_truth_table(function)
 
-    output = list()
     operand_list = function.get_operand_list()
     length = len(operand_list)
 
@@ -112,6 +87,32 @@ def print_truth_table(function):
         print(out)
 
 
+def get_index_form(function):
+    """
+    Computes index form for given function, which basically
+    means converting truth table's function outputs into binary
+    format and then into decimal
+
+    Parameters
+    ----------
+    function : Variable
+        Logical function represented as computation graph
+
+    Returns
+    -------
+    int
+        Index form of logical function
+
+    """
+    table = get_truth_table(function)
+
+    binary = [x[-1] for x in table]
+
+    decimal = sum([x * pow(2, i) for i, x in enumerate(reversed(binary))])
+
+    return decimal
+
+
 def build_PDNF(value, custom_operands=None):
     """
     Builds Principal Disjunction Normal Form of a given function or truth table
@@ -119,10 +120,10 @@ def build_PDNF(value, custom_operands=None):
     Parameters
     ----------
     value : Variable/list
-        Input function of 2-dimensional truth table
+        Input function or truth table's single output vector
     custom_operands: list
         Custom operand identifiers (instead of standard A, B, C etc.)
-        
+
     Returns
     -------
     str
@@ -131,15 +132,15 @@ def build_PDNF(value, custom_operands=None):
     if isinstance(value, Variable):
         table = get_truth_table(value)
     else:
-        table = value
-    
+        table = _expand_vector_to_table(value)
+
     if custom_operands is not None:
         operands = custom_operands
     elif isinstance(value, Variable):
         operands = value._operand_list
     else:
-        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
-        
+        operands = [chr(65 + i) for i in range(len(table[0]) - 1)]
+
     combinations = [c[:-1] for c in table if c[-1] == 1]
     if len(combinations) == 0:
         return 'PDNF does not exist'
@@ -167,10 +168,10 @@ def build_PCNF(value, custom_operands=None):
     Parameters
     ----------
     value : Variable/list
-        Input function of 2-dimensional truth table
+        Input function or truth table's single output vector
     custom_operands: list
         Custom operand identifiers (instead of standard A, B, C etc.)
-        
+
     Returns
     -------
     str
@@ -179,16 +180,15 @@ def build_PCNF(value, custom_operands=None):
     if isinstance(value, Variable):
         table = get_truth_table(value)
     else:
-        table = value
-    
+        table = _expand_vector_to_table(value)
+
     if custom_operands is not None:
         operands = custom_operands
     elif isinstance(value, Variable):
         operands = value._operand_list
     else:
-        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
-        
-        
+        operands = [chr(65 + i) for i in range(len(table[0]) - 1)]
+
     combinations = [c[:-1] for c in table if c[-1] == 0]
     if len(combinations) == 0:
         return 'PCNF does not exist'
@@ -216,10 +216,10 @@ def minimize_PDNF(value, custom_operands=None):
     Parameters
     ----------
     value : Variable/list
-        Input function of 2-dimensional truth table
+        Input function or truth table's single output vector
     custom_operands: list
         Custom operand identifiers (instead of standard A, B, C etc.)
-        
+
     Returns
     -------
     str
@@ -228,15 +228,15 @@ def minimize_PDNF(value, custom_operands=None):
     if isinstance(value, Variable):
         table = get_truth_table(value)
     else:
-        table = value
-    
+        table = _expand_vector_to_table(value)
+
     if custom_operands is not None:
         operands = custom_operands
     elif isinstance(value, Variable):
         operands = value._operand_list
     else:
-        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
-        
+        operands = [chr(65 + i) for i in range(len(table[0]) - 1)]
+
     combinations = [c[:-1] for c in table if c[-1] == 1]
     if len(combinations) == 0:
         return 'PDNF minimization does not exist'
@@ -271,10 +271,10 @@ def minimize_PCNF(value, custom_operands=None):
     Parameters
     ----------
     value : Variable/list
-        Input function of 2-dimensional truth table
+        Input function or truth table's single output vector
     custom_operands: list
         Custom operand identifiers (instead of standard A, B, C etc.)
-        
+
     Returns
     -------
     str
@@ -283,14 +283,14 @@ def minimize_PCNF(value, custom_operands=None):
     if isinstance(value, Variable):
         table = get_truth_table(value)
     else:
-        table = value
-    
+        table = _expand_vector_to_table(value)
+
     if custom_operands is not None:
         operands = custom_operands
     elif isinstance(value, Variable):
         operands = value._operand_list
     else:
-        operands = [chr(65 + i) for i in range(len(value[0]) - 1)]
+        operands = [chr(65 + i) for i in range(len(table[0]) - 1)]
 
     combinations = [c[:-1] for c in table if c[-1] == 0]
     if len(combinations) == 0:
@@ -317,4 +317,3 @@ def minimize_PCNF(value, custom_operands=None):
         out += ' & ' if n < len(combinations) - 1 else ''
 
     return out
-
