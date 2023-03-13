@@ -15,8 +15,8 @@ if __name__ == '__main__':
     D = Variable('D')
     E = Variable('E')
 
-    # out = ((C | B & E) & (A | D) & E) & E
-    out = ~((C | B) & (A & C))
+    # out = ( (C | B & E) & (A | D) & E) & E
+    out = ~((A | B) & (A & ~C))
 
     print('-' * 100)
     print_truth_table(out)
@@ -30,4 +30,12 @@ if __name__ == '__main__':
     print('PDNF minimization', minimize_PDNF(out))
     print('-' * 100)
     print('PCNF minimization', minimize_PCNF(out))
+    print('-' * 100)
+
+    vector_Xout1 = [[0], [0], [0], [0], [0], [0], [0], [1], [1], [1], [0], [0], [0], [0], [0], [0]]
+    custom_operands = ['X1', 'X2', 'X3', 'X4']
+
+    print('-' * 100)
+    print('PDNF minimization', minimize_PDNF(vector_Xout1, custom_operands))
+    print('PCNF minimization', minimize_PCNF(vector_Xout1, custom_operands))
     print('-' * 100)
