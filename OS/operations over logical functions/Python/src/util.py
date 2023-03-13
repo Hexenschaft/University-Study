@@ -1,7 +1,8 @@
 # -----------------------------------------------------------
+# © 2023 Alexander Isaychikov
 # Released under MIT License
-# (C) Alexander Isaychikov, Minsk, Belarus
-# email isaychikov.ai@yahoo.com
+# Minsk, Belarus
+# email alipheesa@gmail.com
 # -----------------------------------------------------------
 
 import numpy as np
@@ -33,6 +34,20 @@ def _cartesian(arrays):
         ix[:, n] = arrays[n][ix[:, n]]
 
     return ix
+
+
+def _expand_vector_to_table(vector):
+    """
+    Expands vector to truth table, expects vector length to be in set of power of two values
+    """
+    length = len(vector)
+    if math.log(length, 2) != int(math.log(length, 2)):
+        raise Exception('Log[2] of input vector\'s length must be integer, not float')
+        
+    operand_count = int(math.log(length, 2))
+    lists = _cartesian([[0, 1] for _ in range(operand_count)])
+    output = [list(x) + y for x, y in zip(lists, vector)]
+    return output
 
 
 def _get_sorted_input(input_list):
